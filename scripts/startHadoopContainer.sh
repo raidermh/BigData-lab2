@@ -7,7 +7,7 @@ fi
 echo "Creating .jar file..."
 mvn package -f ../pom.xml
 
-docker cp ../target/homework2-1.0-SNAPSHOT-jar-with-dependencies.jar $1:/tmp
+docker cp ../target/lab2-1.0-SNAPSHOT-jar-with-dependencies.jar $1:/tmp
 docker cp start.sh $1:/
 
 echo "Go to container with 'docker exec -it hadoop-psql bash' command and start '/start.sh database_name' in it"
