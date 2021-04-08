@@ -8,6 +8,7 @@ fi
 export PATH=$PATH:/usr/local/hadoop/bin/
 hadoop dfs -rm -r logs
 hadoop dfs -rm -r out
+
 # Устанавливаем PostgreSQL
 sudo apt-get update -y
 sudo apt-get install -y postgresql postgresql-contrib
