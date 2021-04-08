@@ -17,11 +17,21 @@ sudo service postgresql start
 sudo -u postgres psql -c 'ALTER USER postgres PASSWORD '\''1234'\'';'
 sudo -u postgres psql -c 'drop database if exists '"$1"';'
 sudo -u postgres psql -c 'create database '"$1"';'
-sudo -u postgres -H -- psql -d $1 -c 'CREATE TABLE logging (id BIGSERIAL PRIMARY KEY, logLevel int, datetime VARCHAR(20), other VARCHAR(256));'
+sudo -u postgres -H -- psql -d $1 -c 'CREATE TABLE logging (id BIGSERIAL PRIMARY KEY, numberFlight int, datetime VARCHAR(20), source VARCHAR(10), destination VARCHAR(10));'
 
 # Генерируем входные данные и добавляем их в таблицу
-POSTFIX=("fccd8a5f3a42,rsyslogd-2007:,action -action 9- suspended, next retry is Fri Oct 26 13:54:37 2018 [v8.16.0 try http://www.rsyslog.com/e/2007 ]"
-        "fccd8a5f3a42,rsyslogd:,rsyslogds userid changed to 107")
+SOURCE=("DME"
+			  "TXL"
+			  "MXP"
+			  "MAD"
+			  "PRG")
+
+DESTINATION=("IST"
+			       "KBP"
+			       "LIS"
+			       "ATH"
+			       "BUD")
+
 for i in {1..200}
 	do
 	    HOUR=$((RANDOM % 24))
@@ -30,7 +40,7 @@ for i in {1..200}
 	    else
 	        TWO_DIGIT_HOUR="$HOUR"
 	    fi
-		sudo -u postgres -H -- psql -d $1 -c 'INSERT INTO logging (logLevel, datetime, other) values ('"$((RANDOM % 8))"','\''Nov 10 '"$TWO_DIGIT_HOUR"':13:56'\'','\'"${POSTFIX[$((RANDOM % ${#POSTFIX[*]}))]}"''\'');'
+		sudo -u postgres -H -- psql -d $1 -c 'INSERT INTO logging (numberFlight, datetime, source, destination) values ('"$((RANDOM % 8))"','\''Nov 10 '"$TWO_DIGIT_HOUR"':13:56'\'','\'"${SOURCE[$((RANDOM % ${#SOURCE[*]}))]}"\'','\'"${DESTINATION[$((RANDOM % ${#DESTINATION[*]}))]}"\'');'
 	done
 
 # Скачиваем SQOOP

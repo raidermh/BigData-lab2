@@ -5,10 +5,13 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LogLevelHour {
+public class FlightHour {
 
-    // Уровень логирования
-    private String logLevel;
+    // Аэропорт отправления
+    private String source;
+
+    // Аэропорт назначения
+    private String destination;
 
     // Час, в который произошло событие
     private int hour;

@@ -17,12 +17,12 @@ import static java.time.temporal.ChronoField.YEAR;
 
 @AllArgsConstructor
 @Slf4j
-public class LogLevelEventCounter {
+public class FlightEventCounter {
 
-    // Формат времени логов - н-р, 'Oct 26 13:54:06'
+    // Формат времени логов - н-р, 'Nov 10 13:54:06'
     private static DateTimeFormatter formatter = new DateTimeFormatterBuilder()
             .appendPattern("MMM dd HH:mm:ss")
-            .parseDefaulting(YEAR, 2018)
+            .parseDefaulting(YEAR, 2020)
             .toFormatter();
 
     /**
@@ -31,20 +31,20 @@ public class LogLevelEventCounter {
      * @param inputDataset - входной DataSet для анализа
      * @return результат подсчета в формате JavaRDD
      */
-    public static JavaRDD<Row> countLogLevelPerHour(Dataset<String> inputDataset) {
+    public static JavaRDD<Row> countFlightPerHour(Dataset<String> inputDataset) {
         Dataset<String> words = inputDataset.map(s -> Arrays.toString(s.split("\n")), Encoders.STRING());
 
-        Dataset<LogLevelHour> logLevelHourDataset = words.map(s -> {
+        Dataset<FlightHour> logLevelHourDataset = words.map(s -> {
             String[] logFields = s.split(",");
             LocalDateTime date = LocalDateTime.parse(logFields[2], formatter);
-            return new LogLevelHour(logFields[1], date.getHour());
-            }, Encoders.bean(LogLevelHour.class))
+            return new FlightHour(logFields[3], logFields[4], date.getHour());
+            }, Encoders.bean(FlightHour.class))
                 .coalesce(1);
 
-        // Группирует по значениям часа и уровня логирования
-        Dataset<Row> t = logLevelHourDataset.groupBy("hour", "logLevel")
+        // Группирует по значениям часа
+        Dataset<Row> t = logLevelHourDataset.groupBy("hour","source", "destination")
                 .count()
-                .toDF("hour", "logLevel", "count")
+                .toDF("hour", "source", "destination", "count")
                 // сортируем по времени лога - для красоты
                 .sort(functions.asc("hour"));
         log.info("===========RESULT=========== ");
