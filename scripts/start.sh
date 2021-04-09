@@ -77,11 +77,7 @@ sqoop import --connect 'jdbc:postgresql://127.0.0.1:5432/'"$1"'?ssl=false' --use
 
 export PATH=$PATH:/spark-2.3.1-bin-hadoop2.7/bin
 
-spark-submit --class bdtc.lab2.SparkSQLApplication --master local --deploy-mode client --executor-memory 1g --name wordcount --conf "spark.app.id=SparkSQLApplication" /tmp/lab2-1.0-SNAPSHOT-jar-with-dependencies.jar hdfs://127.0.0.1:9000/user/root/logs/ out
+spark-submit --class bdtc.lab2.SparkSQLApplication --master local --deploy-mode client --executor-memory 1g --name wordcount --conf "spark.app.id=SparkSQLApplication" /tmp/lab2-1.0-SNAPSHOT-jar-with-dependencies.jar cfs://127.0.0.1:9000/user/root/logs/ out
 
 echo "DONE! RESULT IS: "
-hadoop fs -cat  hdfs://127.0.0.1:9000/user/root/out/part-00000
-
-
-
-
+hadoop fs -cat  cfs://127.0.0.1:9000/user/root/out/part-00000

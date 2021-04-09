@@ -14,9 +14,9 @@ import static bdtc.lab2.FlightEventCounter.countFlightPerHour;
 
 public class SparkTest {
 
-    final String testString1 = "1,6,Oct 26 11:24:09,DME,IST";
-    final String testString2 = "2,6,Oct 26 17:24:09,DME,IST";
-    final String testString3 = "3,6,Oct 26 15:24:09,DME,IST";
+    final String testString1 = "1,6,Oct 26 11:24:09,RUSSIA,TURKEY";
+    final String testString2 = "2,6,Oct 26 17:24:09,RUSSIA,TURKEY";
+    final String testString3 = "3,6,Oct 26 15:24:09,RUSSIA,TURKEY";
 
     SparkSession ss = SparkSession
             .builder()
@@ -33,8 +33,8 @@ public class SparkTest {
         List<Row> rowList = result.collect();
 
         assert rowList.iterator().next().getInt(0) == 11;
-        assert rowList.iterator().next().getString(1).equals("DME");
-        assert rowList.iterator().next().getString(2).equals("IST]");
+        assert rowList.iterator().next().getString(1).equals("RUSSIA");
+        assert rowList.iterator().next().getString(2).equals("TURKEY]");
         assert rowList.iterator().next().getLong(3) == 1;
     }
 
@@ -48,8 +48,8 @@ public class SparkTest {
         List<Row> rowList = result.collect();
 
         assert rowList.iterator().next().getInt(0) == 11;
-        assert rowList.iterator().next().getString(1).equals("DME");
-        assert rowList.iterator().next().getString(2).equals("IST]");
+        assert rowList.iterator().next().getString(1).equals("RUSSIA");
+        assert rowList.iterator().next().getString(2).equals("TURKEY]");
         assert rowList.iterator().next().getLong(3) == 2;
     }
 
@@ -64,13 +64,13 @@ public class SparkTest {
         Row secondRow = rowList.get(1);
 
         assert firstRow.getInt(0) == 11;
-        assert firstRow.getString(1).equals("DME");
-        assert firstRow.getString(2).equals("IST]");
+        assert firstRow.getString(1).equals("RUSSIA");
+        assert firstRow.getString(2).equals("TURKEY]");
         assert firstRow.getLong(3) == 1;
 
         assert secondRow.getInt(0) == 15;
-        assert secondRow.getString(1).equals("DME");
-        assert secondRow.getString(2).equals("IST]");
+        assert secondRow.getString(1).equals("RUSSIA");
+        assert secondRow.getString(2).equals("TURKEY]");
         assert secondRow.getLong(3) == 1;
     }
 
@@ -86,18 +86,18 @@ public class SparkTest {
         Row thirdRow = rowList.get(2);
 
         assert firstRow.getInt(0) == 11;
-        assert firstRow.getString(1).equals("DME");
-        assert firstRow.getString(2).equals("IST]");
+        assert firstRow.getString(1).equals("RUSSIA");
+        assert firstRow.getString(2).equals("TURKEY]");
         assert firstRow.getLong(3) == 1;
 
         assert secondRow.getInt(0) == 15;
-        assert secondRow.getString(1).equals("DME");
-        assert secondRow.getString(2).equals("IST]");
+        assert secondRow.getString(1).equals("RUSSIA");
+        assert secondRow.getString(2).equals("TURKEY]");
         assert secondRow.getLong(3) == 1;
 
         assert thirdRow.getInt(0) == 17;
-        assert thirdRow.getString(1).equals("DME");
-        assert thirdRow.getString(2).equals("IST]");
+        assert thirdRow.getString(1).equals("RUSSIA");
+        assert thirdRow.getString(2).equals("TURKEY]");
         assert thirdRow.getLong(3) == 1;
     }
 

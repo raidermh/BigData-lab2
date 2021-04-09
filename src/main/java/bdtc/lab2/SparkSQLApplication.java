@@ -8,8 +8,13 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
 /**
- * Считает количество событий syslog разного уровная log level по часам.
+ * Класс SparkSQLApplication для запуска Spark
+ *
+ * @author Mikhail Khrychev
+ * @version  1.0.0
+ * @since 09.04.2021
  */
+
 @Slf4j
 public class SparkSQLApplication {
 
