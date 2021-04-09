@@ -15,4 +15,3 @@ docker run --name cassandra-sql -p 7199:7199 -p 7000:7000 -p 7001:7001 -p 9160:9
 12.	Скопировать скрипт запуска в контейнер, командой docker cp start.sh hadoop-sql:/
 13.	Перейти в контейнер docker exec -it hadoop-sql bash
 14.	Запустить скрипт /start.sh database_name2
-[bigDataComp.pdf](https://github.com/raidermh/BigData-lab2/files/6288031/bigDataComp.pdf)
